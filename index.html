@@ -43,7 +43,35 @@
         createApp({
             data() {
                 return {
-                    // Aquí programaremos la lógica en la próxima rama
+                    nuevaTarea: '',
+                    tareas: []
+                }
+            },
+            mounted() {
+                // Carga las tareas guardadas al abrir la aplicación
+                const tareasGuardadas = localStorage.getItem('mis-tareas');
+                if (tareasGuardadas) {
+                    this.tareas = JSON.parse(tareasGuardadas);
+                }
+            },
+            watch: {
+                // Observa cualquier cambio en el arreglo de tareas y lo guarda en el navegador
+                tareas: {
+                    handler(nuevasTareas) {
+                        localStorage.setItem('mis-tareas', JSON.stringify(nuevasTareas));
+                    },
+                    deep: true
+                }
+            },
+            methods: {
+                agregarTarea() {
+                    if (this.nuevaTarea.trim() !== '') {
+                        this.tareas.push(this.nuevaTarea.trim());
+                        this.nuevaTarea = '';
+                    }
+                },
+                eliminarTarea(index) {
+                    this.tareas.splice(index, 1);
                 }
             }
         }).mount('#app')
