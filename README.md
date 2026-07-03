@@ -8,4 +8,9 @@ Minisoftware funcional para la gestión de tareas, desarrollado como proyecto in
 * LocalStorage (Navegador)
 
 ## Instrucciones de Ejecución
-*(Las instrucciones de instalación y despliegue se agregarán en los próximos commits a medida que avance el desarrollo).*
+Al ser una aplicación web estática basada en CDN, no requiere instalación de dependencias ni un servidor complejo.
+
+**Para ejecutar el proyecto:**
+1. Clona este repositorio en tu máquina local.
+2. Abre el archivo `index.html` directamente en cualquier navegador web moderno (Chrome, Firefox, Edge, Safari).
+3. ¡Listo! La aplicación guardará tus tareas localmente en tu navegador.
