@@ -3,9 +3,11 @@
 Minisoftware funcional para la gestión de tareas, desarrollado como proyecto individual para la asignatura **COM4602 - Introducción a los Repositorios de Código Distribuido**.
 
 ## Tecnologías Utilizadas
-* Vue.js / Nuxt
-* Tailwind CSS
-* LocalStorage (Navegador)
+* **HTML5:** Estructura base del documento.
+* **Vue.js 3 (CDN):** Manejo de reactividad, renderizado de listas y estado de la aplicación.
+* **Tailwind CSS (CDN):** Estilización rápida y diseño de la interfaz de usuario.
+* **Lucide Icons:** Iconografía vectorial minimalista.
+* **LocalStorage:** API del navegador para la persistencia de datos sin necesidad de backend.
 
 ## Instrucciones de Ejecución
 Al ser una aplicación web estática basada en CDN, no requiere instalación de dependencias ni un servidor complejo.
