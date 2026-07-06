@@ -31,7 +31,7 @@ Al ser una aplicación web estática basada en CDN, no requiere instalación de 
 ## Futuras Mejoras (Roadmap)
 * **Gestión de Tiempo:** Implementación de fechas de vencimiento para cada tarea.
 * **Modo Productividad:** Integración de un cronómetro basado en la técnica Pomodoro.
-
+* **Sincronización en la Nube:** Migración desde `LocalStorage` hacia una base de datos externa (ej. Firebase) para permitir el acceso multiplataforma.
 
 ---
 
@@ -66,3 +66,4 @@ Being a static web application based on CDNs, it does not require dependency ins
 ## Future Improvements (Roadmap)
 * **Time Management:** Implementation of due dates for each task.
 * **Productivity Mode:** Integration of a timer based on the Pomodoro technique.
+* **Cloud Synchronization:** Migration from `LocalStorage` to an external database (e.g., Firebase) to allow cross-platform access.
