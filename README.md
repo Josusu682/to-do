@@ -67,3 +67,6 @@ Being a static web application based on CDNs, it does not require dependency ins
 * **Time Management:** Implementation of due dates for each task.
 * **Productivity Mode:** Integration of a timer based on the Pomodoro technique.
 * **Cloud Synchronization:** Migration from `LocalStorage` to an external database (e.g., Firebase) to allow cross-platform access.
+
+## Declaración de uso de IA / AI Disclaimer
+La estructura base del código, la resolución de dudas técnicas sobre Vue.js y la correción de errores en el código fueron apoyados por Inteligencia Artificial (Gemini). La IA fue utilizada estrictamente como una herramienta de asistencia educativa para centralizar el aprendizaje a fondo de los comandos de Git.
