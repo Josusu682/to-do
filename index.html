@@ -64,10 +64,17 @@
 
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3 flex-1">
-                                <button class="text-zinc-500 hover:text-white transition flex-shrink-0">
-                                    <i v-if="tarea.completada" data-lucide="check-circle-2"
-                                        class="w-5 h-5 text-zinc-300"></i>
-                                    <i v-else data-lucide="circle" class="w-5 h-5"></i>
+
+                                <!-- Botón Checkbox Corregido -->
+                                <button class="transition flex-shrink-0">
+                                    <!-- Icono completado (Verde) -->
+                                    <span v-show="tarea.completada" class="text-green-500">
+                                        <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                                    </span>
+                                    <!-- Icono pendiente (Gris) -->
+                                    <span v-show="!tarea.completada" class="text-zinc-500 hover:text-white">
+                                        <i data-lucide="circle" class="w-5 h-5"></i>
+                                    </span>
                                 </button>
 
                                 <!-- Modo Edición vs Modo Lectura -->
