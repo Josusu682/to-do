@@ -5,21 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Tareas</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Vue.js -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body class="bg-[#09090b] text-gray-100 font-sans min-h-screen flex flex-col items-center pt-10 px-4">
 
     <div id="app" class="w-full max-w-md mx-auto">
-        <!-- Tarjeta Principal -->
         <div class="bg-[#18181b] rounded-2xl shadow-2xl overflow-hidden border border-zinc-800">
 
-            <!-- Encabezado (Header) -->
             <div class="bg-zinc-300 text-zinc-900 p-6 flex items-center gap-4 rounded-t-2xl">
                 <div class="bg-zinc-400 p-3 rounded-full bg-opacity-30">
                     <i data-lucide="list-todo" class="w-6 h-6"></i>
@@ -31,18 +26,24 @@
             </div>
 
             <div class="p-6">
-                <!-- Input para nueva tarea -->
-                <div class="flex gap-2 mb-6">
-                    <input v-model="nuevaTarea" @keyup.enter="agregarTarea" type="text"
-                        placeholder="Agregar una nueva tarea..."
-                        class="flex-1 bg-[#09090b] border border-zinc-800 rounded-xl p-3 text-sm outline-none focus:border-zinc-500 transition text-white placeholder-zinc-500">
+                <div
+                    class="flex gap-2 mb-6 bg-[#09090b] border border-zinc-800 rounded-xl p-1 focus-within:border-zinc-500 transition">
+                    <input v-model="nuevaTarea" @keyup.enter="agregarTarea" type="text" placeholder="Nueva tarea..."
+                        class="flex-1 bg-transparent p-2 text-sm outline-none text-white placeholder-zinc-500">
+
+                    <select v-model="prioridadActual"
+                        class="bg-[#18181b] text-xs text-zinc-300 border border-zinc-700 rounded-lg px-2 outline-none cursor-pointer">
+                        <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                    </select>
+
                     <button @click="agregarTarea"
-                        class="bg-zinc-200 text-zinc-900 px-4 rounded-xl hover:bg-white transition flex items-center justify-center font-bold">
-                        <i data-lucide="plus" class="w-5 h-5"></i>
+                        class="bg-zinc-200 text-zinc-900 px-3 rounded-lg hover:bg-white transition flex items-center justify-center font-bold">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
                     </button>
                 </div>
 
-                <!-- Filtros -->
                 <div
                     class="flex bg-[#09090b] rounded-lg p-1 mb-6 text-sm font-medium text-zinc-500 border border-zinc-800/50">
                     <button @click="filtroActual = 'todas'"
@@ -56,42 +57,67 @@
                         class="flex-1 py-1.5 rounded-md transition">Completadas</button>
                 </div>
 
-                <!-- Lista de Tareas -->
                 <ul class="space-y-3 mb-6">
                     <li v-for="tarea in tareasFiltradas" :key="tarea.id"
-                        class="flex items-center justify-between bg-[#09090b] p-4 rounded-xl border border-zinc-800 hover:border-zinc-700 transition group cursor-pointer"
+                        class="flex flex-col gap-2 bg-[#09090b] p-4 rounded-xl border border-zinc-800 hover:border-zinc-700 transition group cursor-pointer"
                         @click="toggleCompletada(tarea)">
 
-                        <div class="flex items-center gap-3">
-                            <!-- Icono de Checkbox -->
-                            <button class="text-zinc-500 hover:text-white transition flex-shrink-0">
-                                <i v-if="tarea.completada" data-lucide="check-circle-2"
-                                    class="w-5 h-5 text-zinc-300"></i>
-                                <i v-else data-lucide="circle" class="w-5 h-5"></i>
-                            </button>
-                            <!-- Texto de la tarea -->
-                            <span
-                                :class="{'line-through text-zinc-600': tarea.completada, 'text-zinc-200': !tarea.completada}"
-                                class="text-sm transition select-none">
-                                {{ tarea.texto }}
-                            </span>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3 flex-1">
+                                <button class="text-zinc-500 hover:text-white transition flex-shrink-0">
+                                    <i v-if="tarea.completada" data-lucide="check-circle-2"
+                                        class="w-5 h-5 text-zinc-300"></i>
+                                    <i v-else data-lucide="circle" class="w-5 h-5"></i>
+                                </button>
+
+                                <!-- Modo Edición vs Modo Lectura -->
+                                <input v-if="tarea.editando" v-model="tarea.texto" @keyup.enter="guardarEdicion(tarea)"
+                                    @click.stop
+                                    class="flex-1 bg-[#18181b] border border-zinc-600 rounded px-2 py-1 text-sm text-white outline-none">
+                                <span v-else
+                                    :class="{'line-through text-zinc-600': tarea.completada, 'text-zinc-200': !tarea.completada}"
+                                    class="text-sm transition select-none flex-1 break-all">
+                                    {{ tarea.texto }}
+                                </span>
+                            </div>
+
+                            <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition">
+                                <!-- Botón Editar -->
+                                <button v-if="!tarea.editando && !tarea.completada" @click.stop="activarEdicion(tarea)"
+                                    class="text-zinc-500 hover:text-blue-400 transition">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                                </button>
+                                <!-- Botón Guardar -->
+                                <button v-if="tarea.editando" @click.stop="guardarEdicion(tarea)"
+                                    class="text-green-500 hover:text-green-400 transition">
+                                    <i data-lucide="save" class="w-4 h-4"></i>
+                                </button>
+                                <!-- Botón Eliminar -->
+                                <button @click.stop="eliminarTarea(tarea.id)"
+                                    class="text-zinc-600 hover:text-red-500 transition">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <!-- Botón Eliminar (Aparece en hover) -->
-                        <button @click.stop="eliminarTarea(tarea.id)"
-                            class="text-zinc-600 hover:text-red-500 transition opacity-0 group-hover:opacity-100 flex-shrink-0">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
+                        <!-- Etiqueta de Prioridad -->
+                        <div class="ml-8">
+                            <span :class="{
+                                'bg-red-500/10 text-red-400 border-red-500/20': tarea.prioridad === 'Alta',
+                                'bg-yellow-500/10 text-yellow-400 border-yellow-500/20': tarea.prioridad === 'Media',
+                                'bg-blue-500/10 text-blue-400 border-blue-500/20': tarea.prioridad === 'Baja'
+                            }" class="text-[10px] font-bold px-2 py-0.5 rounded border">
+                                {{ tarea.prioridad }}
+                            </span>
+                        </div>
                     </li>
 
-                    <!-- Estado vacío -->
                     <li v-if="tareasFiltradas.length === 0"
                         class="text-center text-zinc-500 text-sm py-6 bg-[#09090b] rounded-xl border border-dashed border-zinc-800">
-                        No hay tareas para mostrar aquí.
+                        No hay tareas para mostrar.
                     </li>
                 </ul>
 
-                <!-- Footer (Estadísticas y Limpieza) -->
                 <div class="flex items-center justify-between text-xs text-zinc-500 pt-4 border-t border-zinc-800/80">
                     <span>{{ totalTareas }} tareas en total</span>
                     <button @click="limpiarTodo" v-if="tareas.length > 0"
@@ -99,9 +125,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Mensaje Motivacional -->
-        <p class="text-center text-zinc-600 text-xs mt-6">Mantente organizado, una tarea a la vez.</p>
     </div>
 
     <script>
@@ -111,19 +134,14 @@
             data() {
                 return {
                     nuevaTarea: '',
-                    // Las tareas ahora son objetos con un ID único y un estado de completado
+                    prioridadActual: 'Media',
                     tareas: [],
-                    filtroActual: 'todas' // 'todas', 'pendientes', 'completadas'
+                    filtroActual: 'todas'
                 }
             },
             computed: {
-                // Propiedades computadas que se actualizan automáticamente
-                tareasPendientes() {
-                    return this.tareas.filter(t => !t.completada).length;
-                },
-                totalTareas() {
-                    return this.tareas.length;
-                },
+                tareasPendientes() { return this.tareas.filter(t => !t.completada).length; },
+                totalTareas() { return this.tareas.length; },
                 tareasFiltradas() {
                     if (this.filtroActual === 'pendientes') return this.tareas.filter(t => !t.completada);
                     if (this.filtroActual === 'completadas') return this.tareas.filter(t => t.completada);
@@ -131,28 +149,17 @@
                 }
             },
             mounted() {
-                // Al cargar la app, buscamos los datos (Cambié la key a 'mis-tareas-v2' para no chocar con las viejas que eran solo texto)
-                const tareasGuardadas = localStorage.getItem('mis-tareas-v2');
-                if (tareasGuardadas) {
-                    this.tareas = JSON.parse(tareasGuardadas);
-                }
-
-                // Inicializa los iconos de Lucide
-                this.$nextTick(() => {
-                    lucide.createIcons();
-                });
+                const tareasGuardadas = localStorage.getItem('mis-tareas-v3');
+                if (tareasGuardadas) this.tareas = JSON.parse(tareasGuardadas);
+                this.$nextTick(() => lucide.createIcons());
             },
             updated() {
-                // Vuelve a inyectar los iconos cada vez que Vue actualiza el DOM (necesario al agregar/filtrar tareas)
-                this.$nextTick(() => {
-                    lucide.createIcons();
-                });
+                this.$nextTick(() => lucide.createIcons());
             },
             watch: {
-                // Si el arreglo cambia, guardamos la versión completa (con IDs y estados)
                 tareas: {
                     handler(nuevasTareas) {
-                        localStorage.setItem('mis-tareas-v2', JSON.stringify(nuevasTareas));
+                        localStorage.setItem('mis-tareas-v3', JSON.stringify(nuevasTareas));
                     },
                     deep: true
                 }
@@ -161,23 +168,31 @@
                 agregarTarea() {
                     if (this.nuevaTarea.trim() !== '') {
                         this.tareas.push({
-                            id: Date.now(), // ID único basado en el timestamp
+                            id: Date.now(),
                             texto: this.nuevaTarea.trim(),
-                            completada: false
+                            completada: false,
+                            prioridad: this.prioridadActual,
+                            editando: false
                         });
                         this.nuevaTarea = '';
+                        this.prioridadActual = 'Media';
                     }
                 },
                 toggleCompletada(tarea) {
-                    tarea.completada = !tarea.completada;
+                    if (!tarea.editando) tarea.completada = !tarea.completada;
+                },
+                activarEdicion(tarea) {
+                    tarea.editando = true;
+                },
+                guardarEdicion(tarea) {
+                    if (tarea.texto.trim() === '') return this.eliminarTarea(tarea.id);
+                    tarea.editando = false;
                 },
                 eliminarTarea(id) {
                     this.tareas = this.tareas.filter(t => t.id !== id);
                 },
                 limpiarTodo() {
-                    if (confirm('¿Estás seguro de que quieres eliminar todas las tareas?')) {
-                        this.tareas = [];
-                    }
+                    if (confirm('¿Eliminar todas las tareas?')) this.tareas = [];
                 }
             }
         }).mount('#app')
