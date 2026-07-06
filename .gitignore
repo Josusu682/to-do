@@ -1,20 +1,12 @@
-# Dependencias
-node_modules/
-
-# Archivos de entorno
+# Archivos de configuración y secretos (Futura integración con Firebase)
 .env
-.env.*
+config-secreta.json
 
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Apuntes personales y borradores que no deben subirse al repo público
+notas.txt
+borrador_informe.docx
+borrador_informe.pdf
 
-# Archivos generados por Nuxt
-.nuxt/
-.output/
-dist/
-
-# Archivos del sistema operativo (Mac/Windows)
+# Archivos autogenerados por el Sistema Operativo
 .DS_Store
 Thumbs.db
