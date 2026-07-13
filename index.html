@@ -44,6 +44,11 @@
                         <option value="Trabajo">Trabajo</option>
                         <option value="Estudios">Estudios</option>
                         <option value="Personal">Personal</option>
+                        <option value="Compras">Compras</option>
+                        <option value="Hogar">Hogar</option>
+                        <option value=""Salud">Salud</option>
+                        <option value="Evento">Evento</option>
+                        <option value="Otros">Otros</option>
                     </select>
                     <button @click="agregarTarea"
                         class="bg-zinc-200 text-zinc-900 px-3 rounded-lg hover:bg-white transition flex items-center justify-center font-bold">
@@ -70,6 +75,11 @@
                     <option value="Trabajo">Trabajo</option>
                     <option value="Estudios">Estudios</option>
                     <option value="Personal">Personal</option>
+                    <option value="Compras">Compras</option>
+                    <option value="Hogar">Hogar</option>
+                    <option value=""Salud">Salud</option>
+                    <option value="Evento">Evento</option>
+                    <option value="Otros">Otros</option>
                 </select>
                 <ul class="space-y-3 mb-6">
                     <li v-for="tarea in tareasFiltradas" :key="tarea.id"
