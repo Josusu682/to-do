@@ -39,6 +39,12 @@
                         <option value="Alta">Alta</option>
                     </select>
 
+                    <select v-model="categoriaActual"
+                        class="bg-[#18181b] text-xs text-zinc-300 border border-zinc-700 rounded-lg px-2 outline-none cursor-pointer">
+                        <option value="Trabajo">Trabajo</option>
+                        <option value="Estudios">Estudios</option>
+                        <option value="Personal">Personal</option>
+                    </select>
                     <button @click="agregarTarea"
                         class="bg-zinc-200 text-zinc-900 px-3 rounded-lg hover:bg-white transition flex items-center justify-center font-bold">
                         <i data-lucide="plus" class="w-4 h-4"></i>
@@ -58,6 +64,13 @@
                         class="flex-1 py-1.5 rounded-md transition">Completadas</button>
                 </div>
 
+                <select v-model="filtroCategoria"
+                    class="w-full bg-[#18181b] text-xs text-zinc-300 border border-zinc-700 rounded-lg px-3 py-2 mb-6 outline-none cursor-pointer">
+                    <option value="todas">Todas las categorías</option>
+                    <option value="Trabajo">Trabajo</option>
+                    <option value="Estudios">Estudios</option>
+                    <option value="Personal">Personal</option>
+                </select>
                 <ul class="space-y-3 mb-6">
                     <li v-for="tarea in tareasFiltradas" :key="tarea.id"
                         class="flex flex-col gap-2 bg-[#09090b] p-4 rounded-xl border border-zinc-800 hover:border-zinc-700 transition group cursor-pointer"
@@ -116,6 +129,9 @@
                                 'bg-blue-500/10 text-blue-400 border-blue-500/20': tarea.prioridad === 'Baja'
                             }" class="text-[10px] font-bold px-2 py-0.5 rounded border">
                                 {{ tarea.prioridad }}
+                            </span>
+                            <span class="ml-2 text-[10px] font-bold px-2 py-0.5 rounded border bg-zinc-800 text-zinc-300 border-zinc-700">
+                                {{ tarea.categoria }}
                             </span>
                         </div>
                     </li>
