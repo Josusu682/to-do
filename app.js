@@ -6,16 +6,21 @@ createApp({
             nuevaTarea: '',
             prioridadActual: 'Media',
             tareas: [],
-            filtroActual: 'todas'
+            filtroActual: 'todas',
+            categoriaActual: 'Estudios',
+            filtroCategoria: 'todas'
         };
     },
     computed: {
         tareasPendientes() { return this.tareas.filter(t => !t.completada).length; },
         totalTareas() { return this.tareas.length; },
         tareasFiltradas() {
-            if (this.filtroActual === 'pendientes') return this.tareas.filter(t => !t.completada);
-            if (this.filtroActual === 'completadas') return this.tareas.filter(t => t.completada);
-            return this.tareas;
+            let tareas = this.tareas;
+
+            if (this.filtroActual === 'pendientes') {tareas = tareas.filter(t => !t.completada);}
+            if (this.filtroActual === 'completadas') {tareas = tareas.filter(t => t.completada);}            
+            if (this.filtroCategoria !== 'todas') {tareas = tareas.filter(t => t.categoria === this.filtroCategoria);}
+            return tareas;
         }
     },
     mounted() {
@@ -42,10 +47,12 @@ createApp({
                     texto: this.nuevaTarea.trim(),
                     completada: false,
                     prioridad: this.prioridadActual,
+                    categoria: this.categoriaActual,
                     editando: false
                 });
                 this.nuevaTarea = '';
                 this.prioridadActual = 'Media';
+                this.categoriaActual = 'Estudios';
             }
         },
         toggleCompletada(tarea) {
