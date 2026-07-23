@@ -11,7 +11,14 @@ Minisoftware funcional para la gestión de tareas, desarrollado como proyecto in
 * Edición en línea para modificar tareas sin necesidad de borrarlas.
 * Eliminación individual y limpieza total de la lista.
 * Sistema de filtros de visualización (Todas, Pendientes, Completadas).
+* Sistema de categorías para organizar las tareas por contexto.
 * Persistencia de información mediante `LocalStorage`.
+
+## Categorías y filtros
+
+Al crear una tarea, selecciona una categoría para identificar su contexto. Las categorías disponibles son: **Trabajo, Estudios, Personal, Compras, Hogar, Salud, Evento** y **Otros**.
+
+Cada tarea muestra su categoría junto a la prioridad. Para ver solo un tipo de tarea, usa el selector de categorías y elige la categoría deseada; la opción **Todas las categorías** restaura la visualización completa. Este filtro puede combinarse con los filtros de estado: Todas, Pendientes y Completadas.
 
 ## Tecnologías Utilizadas
 * **HTML5:** Estructura base del documento.
@@ -46,7 +53,14 @@ Functional mini-software for task management, developed as an individual project
 * Inline editing to modify tasks without deleting them.
 * Individual deletion and full list clearing.
 * View filtering system (All, Pending, Completed).
+* Category system to organize tasks by context.
 * Data persistence using `LocalStorage`.
+
+## Categories and filters
+
+When creating a task, select a category to identify its context. The available categories are: **Work, Studies, Personal, Shopping, Home, Health, Event** and **Other**.
+
+Each task displays its category next to its priority. To view only one type of task, use the category selector and choose the desired category; **All categories** restores the complete list. This filter can be combined with the status filters: All, Pending and Completed.
 
 ## Technologies Used
 * **HTML5:** Core document structure.
